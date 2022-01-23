@@ -535,7 +535,7 @@ class BarChartPainter extends AxisChartPainter<BarChartData> {
 
                 final barRod = barGroup.barRods[0];
 
-                drawTouchTooltip(canvasWrapper, _groupBarsPosition!,
+                drawTouchTooltip(context, canvasWrapper, _groupBarsPosition!,
                     targetData.barTouchData.touchTooltipData, barGroup, index, barRod, 0, holder);
               },
         );
