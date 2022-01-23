@@ -6,6 +6,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:fl_chart/src/chart/base/axis_chart/axis_chart_painter.dart';
 import 'package:fl_chart/src/chart/base/base_chart/base_chart_painter.dart';
 import 'package:fl_chart/src/utils/canvas_wrapper.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/utils.dart';
@@ -524,7 +525,20 @@ class BarChartPainter extends AxisChartPainter<BarChartData> {
         final span = TextSpan(
             style: Utils().getThemeAwareTextStyle(
                 context, bottomTitles.getTextStyles(context, xValue)),
-            text: text);
+            text: text,
+            recognizer: TapGestureRecognizer()
+              ..onTap = () {
+                final barGroup = targetData.barGroups[index];
+                if (!barGroup.showingTooltipIndicators.contains(0)) {
+                  return;
+                }
+
+                final barRod = barGroup.barRods[0];
+
+                _drawTouchTooltip(canvasWrapper, _groupBarsPosition!,
+                    targetData.barTouchData.touchTooltipData, barGroup, index, barRod, 0, holder);
+              },
+        );
         final tp = TextPainter(
             text: span,
             textAlign: bottomTitles.textAlign,
